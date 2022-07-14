@@ -1,0 +1,8 @@
+* child photos
+#+BEGIN_EXPORT HTML
+<img src="./images/IMG_1067.HEIC" width="304" "height="208" alt="child">
+#+END_EXPORT
+
+[[file:images/IMG_1067.HEIC][child]]
+
+[[./index.org][<-- Back to Home]]

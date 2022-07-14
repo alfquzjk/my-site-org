@@ -1,0 +1,8 @@
+* Philadelphia
+#+BEGIN_EXPORT HTML
+<video width="640" height="480" controls="controls">
+<source src="./video/philadelphia.mp4" type="video/mp4"/>
+</video>
+#+END_EXPORT
+
+[[./index.org][<-- Back to Home]]

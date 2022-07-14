@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /
+</head>
+<body>
+<div id="content" class="content">
+<div id="outline-container-orgf6aee21" class="outline-2">
+<h2 id="orgf6aee21">xkeysnail for emacs-like key</h2>
+<div class="outline-text-2" id="text-orgf6aee21">
+<p>
+一位日本开发者开发了一个能够将<a href="https://www.gnu.org/software/emacs/">emacs</a>的键位习惯应用于整个系统的程序<a href="https://github.com/mooz/xkeysnail">xkeysnail</a>，用Python开发而成。
+例如emacs中控制光标移动的键 C+n, C+p, C+f, C+b, 等等都可以很好地运用于其他程序的文本输入修改等。
+xkeysnail做的就是将不是emacs-like快捷键的程序映射成emacs-like key。
+</p>
+</div>
+<div id="outline-container-org2dc19bb" class="outline-3">
+<h3 id="org2dc19bb">Install xkeysnail</h3>
+<div class="outline-text-3" id="text-org2dc19bb">
+<p>
+使用<a href="https://github.com/actionless/pikaur">pikaur</a>进行安装。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">pikaur -S xkeysnail
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org03930d1" class="outline-3">
+<h3 id="org03930d1">配置xkeysnail自启动</h3>
+<div class="outline-text-3" id="text-org03930d1">
+<p>
+由于xkeysnail需要获取键盘活动必须以root权限监听并映射，所以有两种方式来自启动xkeysnail,
+第一种方式是编写一个xkeysnail.service配置，让systemd将xkeysnail作为守护进程启动,但不推荐。
+这里我先择第二种方式。
+</p>
+</div>
+<div id="outline-container-org2a5aa09" class="outline-4">
+<h4 id="org2a5aa09">创建一个新的用户组uinput</h4>
+<div class="outline-text-4" id="text-org2a5aa09">
+<div class="org-src-container">
+<pre class="src src-shell">sudo groupadd -f uinput
+sudo gpasswd -a $USER uinput
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4bd1c9c" class="outline-4">
+<h4 id="org4bd1c9c">通过udev创建新的访问授予权限</h4>
+<div class="outline-text-4" id="text-org4bd1c9c">
+<div class="org-src-container">
+<pre class="src src-shell">cat &lt;&lt;EOF | sudo tee /etc/udev/rules.d/70-xkeysnail.rules
+KERNEL=="uinput", GROUP="uinput", MODE="0660", OPTIONS+="static_node=uinput"
+KERNEL=="event[0-9]*", GROUP="uinput", MODE="0660"
+EOF
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf6ddb08" class="outline-4">
+<h4 id="orgf6ddb08">编写脚本开机自启动xkeysnail</h4>
+<div class="outline-text-4" id="text-orgf6ddb08">
+<p>
+由于我使用的是<a href="http://dwm.suckless.org/">dwm</a>窗口管理器，并且使用<a href="http://dwm.suckless.org/patches/autostart/">autostart</a>这个补丁专门来管理用户空间的自启动程序。
+编写xkeynsail 的自启动脚本非常简单，只需要在autostart.sh脚本中添加一行shell。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">xkeysnail --quiet $HOME/.config/xkeysnail/config.py
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6bc2573" class="outline-4">
+<h4 id="org6bc2573">关于config.py的配置文件</h4>
+<div class="outline-text-4" id="text-org6bc2573">
+<p>
+xkeysnail 的启动必须指定一个config, 用来映射x系统的键盘事件，xkeysnail上作者已经有一个完全可用的emacs-like配置，
+如果你需要做一些特别的修改，可以编辑config.py这个文件。通常情况下，Linux终端就是一个emacs-like键位的程序，我习惯于使用
+alacritty作为我的终端模拟器，这时候为了避免冲突，需要将alacritty过滤掉，它的所有键盘活动不需要xkeysnail来映射。
+</p>
+<div class="org-src-container">
+<pre class="src src-python">define_keymap(lambda wm_class: wm_class not in ("Emacs", "URxvt", \
+    "Alacritty"),{...})
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org1f02ca3" class="outline-3">
+<h3 id="org1f02ca3">重启计算机</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.5.2)</p>
+</div>
+</body>
+</html>

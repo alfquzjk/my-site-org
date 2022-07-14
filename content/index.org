@@ -1,0 +1,44 @@
+#+TITLE: LoveIsTouch's website
+*** life is short, but today is a good day!
+
+** Poems of the bard
+- [[./Tears.org][Tears]]
+- [[./LongHu.org][Longhu]]
+- [[./Jing.org][Jing]]
+- [[./Luck.org][Luck]]
+- [[./Snow.org][Snow]]
+- [[./Brother.org][Brother]]
+- [[./Sailing.org][Sailing]]
+- [[./Today.org][Today]]
+- [[./Time.org][Time]]
+- [[./A-strange-friend.org][A strange friend]]
+- [[./If-life-did-not-deceived-you.org][If life did not deceived you]]
+- [[./Yixiang.org][Yixiang]]
+- [[./No-title-2.org][No title]]
+- [[./No-title-1.org][No title]]  
+- [[./No-title-0.org][No title]]
+  
+** Articles
+- note
+- [[./note-0.org][note]]
+  
+** In those years
+- 2022
+- 2021
+- 2020
+- 2019
+- 2018
+- 2017
+- 2016
+- 2015
+- [[./Child.org][child]]
+  
+** Love Music
+- [[./Woman.org][<Woman>]]--John Lennon
+- [[./Philadelphia.org][<Philadelphia>]]--Neil Young
+- [[./Suzanne.org][<Suzanne>]]--Leonard Cohen
+- [[./Forever-Young.org][<Forever Young>]]--Bob Dylan
+- [[./xiang-qi-le-ta.org][<xiangqileta>]]--Li Zhi
+  
+** Tec  
+- [[./xkeysnail.org][xkeysnail for emacs-like keybindings]]
