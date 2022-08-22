@@ -1,0 +1,72 @@
+#+OPTIONS: \n:t
+* Guantanamera
+#+begin_export HTML
+<audio controls>
+  <source src="./audio/guantanamero.ogg" type="audio/ogg">
+</audio>
+#+end_export
+
+** Lyrics:
+Me odiaba mi primo
+Por celos a mi carrera.
+Lo arrestaron y dijo
+Que terrorista yo era.
+
+Guantanamero, soy preso guantanamero.
+Guantanamero, soy preso guantanamero.
+
+Ha decidido el imperio
+Tenerme por siempre preso
+Y la cuestión es hacerlo
+Con o sin falso proceso.
+
+Guantanamero, etc.
+
+Cuando me hieren el cuerpo,
+Dicen que no me torturan.
+Causan heridas profundas
+De esas que nunca se curan.
+
+Guantanamero, etc.
+
+No me permiten que duerma:
+Mi fin no es un misterio.
+Voy a salir cuando muera
+O caiga el gran imperio.
+
+Guantanamero, etc.
+
+** English Translation:
+My cousin hated me;
+He was jealous of my career.
+They arrested him and he said
+I was a terrorist.
+
+Guantanaman, I'm a Guantanaman prisoner.
+Guantanaman, I'm a Guantanaman prisoner.
+
+The empire has decided
+To keep me in prison forever.
+The question is whether to do it
+With or without a fake trial.
+
+Guantanaman, I'm a Guantanaman prisoner.
+Guantanaman, I'm a Guantanaman prisoner.
+
+When they injure my body
+They say they are not torturing me.
+They cause me grave wounds
+Such as never heal.
+
+Guantanaman, I'm a Guantanaman prisoner.
+Guantanaman, I'm a Guantanaman prisoner.
+
+They don't let me sleep:
+My end is no mystery.
+I will get out when I die
+Or the great empire falls.
+
+Guantanaman, I'm a Guantanaman prisoner.
+Guantanaman, I'm a Guantanaman prisoner.
+
+[[./index.org][<-- Back to Home]]

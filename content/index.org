@@ -19,7 +19,8 @@
 - [[./No-title-0.org][No title]]
   
 ** Articles
-- note
+- [[./note-2.org][note]]
+- [[./note-1.org][note]]
 - [[./note-0.org][note]]
   
 ** In those years
@@ -39,6 +40,8 @@
 - [[./Suzanne.org][<Suzanne>]]--Leonard Cohen
 - [[./Forever-Young.org][<Forever Young>]]--Bob Dylan
 - [[./xiang-qi-le-ta.org][<xiangqileta>]]--Li Zhi
+- [[./guantanamera.org][<guantanamera>]]
   
-** Tec  
+** Tec
+- [[./extend-root-space.org][Extending root partition's space]]
 - [[./xkeysnail.org][xkeysnail for emacs-like keybindings]]

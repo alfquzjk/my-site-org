@@ -1,0 +1,153 @@
+
+* Extending the root partition's space from the home partition with the fdisk
+起初在安装 ~GNU/Linux~ 的时候由于采用系统默认的磁盘分割，
+导致我的这块只有 ~120G~ 的磁盘其 ~root~ 分区只有可怜的 ~20G~ ， 于是最近在安装一些软件包的时候存放二进制文件的 ~/usr/bin~ 目录空间不够，很是苦恼。
+本来想着删除掉一些根目录下的缓存文件，
+或着卸载几个不常用的软件包，但发现家目录 ~(/home)~ 居然占了整个
+磁盘的 ~3/4~ 之多 ，那就不如从 ~/home~ 分区腾出一部分空间来拓展到
+~/~ 目录。
+
+** 做好 /home 的备份
+首先， ~/home~ 目录存放了大量的用户配置以及一些文件数据，有些是很重要的，
+如果不想重装系统，一定要做好备份！（系统重装是一件极其耗费时间和精力的事，尽管
+我曾作为一个 ~Linux~ 菜鸟做过很多重装的事，配置起一个看起来还算不错的系统！）
+我看了一下我的 ~/home~ 目录其 ~90G~ 的磁盘，所有的数据加起来才一共占到
+~13~ 个 G 左右，但是 ~/root~ 所占的数据已经 ~96%~ 之多了，那么备份到
+~/root~ 目录下不可能，即使用压缩也不行。幸好我有第二块磁盘可供使用，那么
+就用这块磁盘来做 ~/home~  数据的备份。
+
+#+begin_src shell
+  tar -czvf /your_back_up_disk/home.trz -C /home .
+#+end_src
+
+这个过程可能需要点时间，看你的文件大小，以及是否是机械磁盘，不过我大概等了 ~7,8~ 分钟，而且我的备份磁盘还是机械盘。完成这一步骤接下来的几个部分
+一定要非常仔细且认真，因为稍有不慎会将整个系统格式化。
+
+** 小心驶得万年船
+重启系统，以 ~/root~ 权限，并以 ~tty0~ 登陆，因为如果继续在当前用户环境下操作，
+由于某些程序需要读取 ~/home~ 中的文件，系统就可能会处于繁忙状态而无法操作。
+*** 查看当前系统盘信息
+#+begin_src shell
+  fdisk -l
+#+end_src
+
+确定好当前系统是哪一个盘符下，类似如下输出：
+#+begin_src shell
+  Disk /dev/sda: 119.24 GiB, 128035676160 bytes
+  ...
+    Device      Start       End   Sectors  Size Type
+  /dev/sda1      2048   1048575   1046528  511M EFI System
+  /dev/sda2   1050624  84936703  83886080   40G Linux filesystem
+  /dev/sda3  84936704 250068991 165132288 78.7G Linux filesystem
+#+end_src
+
+例如我的根 ~/~ 目录对应的磁盘分区是 ~/dev/sda2~ ， 而 ~/dev/sda3~ 磁盘分区被挂载到了 ~/home~ 目录，可以通过如下命令确定：
+#+begin_src shell
+  df -h
+#+end_src
+类似的输出如下：
+#+begin_src shell
+ Filesystem       Size  Used Avail Use% Mounted on
+  /dev/sda2        40G   19G   20G  49% /
+  /dev/sda3        77G   15G   59G  21% /home
+  /dev/sda1       510M   72M  439M  14% /boot
+#+end_src
+*** 进行分区操作
+接下来的操作一定要谨慎！
+
+首先卸载 ~/home~ 目录对应的分区， 例如我的 ~/home~ 目录对应 ~/dev/sda3~ 。
+#+begin_src shell
+  umount /dev/sda3
+#+end_src
+
+完成上一步，接下来就是正式扩容了：
+#+begin_src shell
+  fdisk /dev/sda
+#+end_src
+
+使用 ~fdisk~ 命令进行磁盘的扩容。 ~fdisk~
+磁盘操作命令非常简单，你只需要键入一个字母以及根据命令的提示
+输入参数就可以完成磁盘的扩容。
+#+begin_src shell
+  Command (m for help):
+#+end_src
+接着输入 ~p~ 查看当前系统盘下的磁盘分割信息，类似如下输出：
+#+begin_src shell
+  Device      Start       End   Sectors  Size Type
+/dev/sda1      2048   1048575   1046528  511M EFI System
+/dev/sda2   1050624  84936703  83886080   40G Linux filesystem
+/dev/sda3  84936704 250068991 165132288 78.7G Linux filesystem
+#+end_src
+
+可以看到命令 ~p~ 与终端命令 ~fdisk -l~ 输出的结果一样。
+我们首先删除 ~/home~ 对应的磁盘分区 ~/dev/sda3~ ， 使用命令
+~d~ ，类似输出如下：
+#+begin_src shell
+  Command (m for help): d
+  Partition number (1-3, default 3):
+#+end_src 
+这时候它提示你要删除的分区是哪一个， ~fdisk~ 会为每一个逻辑分区编一个号，
+比如 ~/boot~ 分区从 ~2048~ 位起始到 ~1048575~ 号位结束为 ~number1~ ，
+从 ~1050624~ 号位开始到 ~84936703~ 号位结束为 ~number2~ ， 以此类推， 可以
+看到每一个分区的顺序是按照当初磁盘分割时的逻辑顺序排列的。
+好了， 由于我的 ~/home~ 目录对应 ~/de/sda3~ 分区， 所以输入数字 ~3~ ，
+然后再输入 ~w~ 命令进行写入并保存退出（这时候你的 ~/home~ 下的所有数据都被清空，
+但是我们已经及时做好了备份）。
+
+接着我们再次使用 ~fdisk~ 命令进行下一步的操作：
+#+begin_src shell
+  fdisk /dev/sda
+#+end_src
+输入 ~p~ 查看当前分区：
+#+begin_src shell
+  Command (m for help): p
+  Device      Start       End   Sectors  Size Type
+/dev/sda1      2048   1048575   1046528  511M EFI System
+/dev/sda2   1050624  84936703  83886080   40G Linux filesystem
+#+end_src
+可以看到我们已经将 ~/home~ 目录所对应的 ~/dev/sda3~ 分区删除，
+接下来进行 ~/~ 对应的 ~/dev/sda2~ 分区进行扩容， 记住 ~/dev/sda2~
+的起始位是 ~1050624~ 。
+
+继续输入 ~d~ 命令， 删除 ~/~ 目录对应的 ~/dev/sda2~ ， 这时候不要保存(切记!)
+输入 ~n~ 命令， 创建新的分区(也就是扩容 ~/~)， 类似如下输出：
+#+begin_src shell
+  Command (m for help): n
+  Partition number (2-128, default 2): 2
+  First sector (34-250069646, default 1048576):
+#+end_src
+起始位置位输入原本 ~/dev/sda2~ 的 ~Start~ ， 也就是 ~1050624~ ，
+类似如下输出：
+#+begin_src shell
+  Last sector, +/-sectors or +/-size{K,M,G,T,P} (1048576-1050623, default 1050623):
+#+end_src
+接着提示你输入 ~sectors~ ， 也就是大小， 注意这里我们是要扩容 ~/~ ， 所以我们应该输入比 ~/~ 原本 ~20G~ 还要大的值，
+至少不能小于 ~20G~ ， 具体来说不能在它的结束位 ~end~ 以内。  这里我输入的命令值是 ~+40G~ ， 接着再重新创建 ~/home~ 目录的分区，
+继续输入 ~n~ ， 如果你想把剩余的空间都给 ~/home~ ， 接下来所有的都可以默认， ~enter~ 一步步执行。
+确认一切没问题之后， 输入 ~w~ 保存并退出。
+
+*** 对扩容的分区进行最后一步操作
+接下来还要对 ~/~ 的分区进行文件系统的写入：
+#+begin_src shell
+  resize2fs /dev/sda2
+#+end_src
+注意， 如果你原来的 ~/dev/sda2~ 文件系统是 ~ext*~ 格式， 那么使用以上命令没问题，
+但如果是 ~xfs~ 请使用 ~xfs_growfs /dev/sda2~ 。
+
+*** 恢复 /home 目录
+最后一步从备份中恢复 ~/home~ 目录中的所有文件， 首先为 ~/dev/sda3~ 写入文件系统，
+由于我使用的是 ~ext4~ ， 所以输入以下命令：
+#+begin_src shell
+  mkfs.ext4 /dev/sda3
+#+end_src
+
+从备份中恢复数据到 ~/home~ ：
+#+begin_src shell
+  tar -xzvf /your_back_up/home.trz -C /home
+#+end_src
+如果一切顺利重启计算机。
+
+** 重启计算机
+输入用户账号登陆， 进入桌面系统， 一切又是当初的模样！
+
+[[./index.org][<-- Back to Home]]

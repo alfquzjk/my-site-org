@@ -1,8 +1,8 @@
 * 想起了Ta
-#+BEGIN_EXPORT HTML
+#+begin_export HTML
 <video width="640" height="480" controls="controls">
-<source src="./xiang-qi-le-ta.mp4" type="video/mp4"/>
+<source src="./video/xiang-qi-le-ta.mp4" type="video/mp4"/>
 </video>
-#+END_EXPORT
+#+end_export
 
 [[./index.org][<-- Back to Home]]

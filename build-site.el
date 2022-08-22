@@ -16,6 +16,12 @@
 ;; generate the site output
 (setq org-html-validation-link nil)
 
+;;
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t)
+
+
 ;; Customize the HTML output
 (setq org-html-validation-link nil ;; Don't show validation link
       org-html-head-include-scripts nil ;; Use our own scripts
