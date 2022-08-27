@@ -1,5 +1,5 @@
 #+OPTIONS: \n:t
-* Luck
+#+TITLE: Luck
 往昔喧囂繁華的都市
 第一次沒有降下
 勞動者的汗水和淚花

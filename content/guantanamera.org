@@ -1,12 +1,12 @@
 #+OPTIONS: \n:t
-* Guantanamera
+#+TITLE: Guantanamera
 #+begin_export HTML
 <audio controls>
   <source src="./audio/guantanamero.ogg" type="audio/ogg">
 </audio>
 #+end_export
 
-** Lyrics:
+*** Lyrics:
 Me odiaba mi primo
 Por celos a mi carrera.
 Lo arrestaron y dijo
@@ -36,7 +36,7 @@ O caiga el gran imperio.
 
 Guantanamero, etc.
 
-** English Translation:
+*** English Translation:
 My cousin hated me;
 He was jealous of my career.
 They arrested him and he said

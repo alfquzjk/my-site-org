@@ -1,5 +1,5 @@
 #+OPTIONS: \n:t
-* Time
+#+TITLE: Time
 時間滴答着走了
 不知向前還是向後
 向左還是向右

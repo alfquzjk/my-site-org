@@ -1,5 +1,5 @@
 #+OPTIONS: \n:t
-* A Strange Friend
+#+TITLE: A Strange Friend
 陌生的朋友啊
 你是否還在流浪
 在烈日下沒有一處陰涼

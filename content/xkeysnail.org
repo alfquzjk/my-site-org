@@ -1,4 +1,4 @@
-* xkeysnail for emacs-like key
+#+TITLE: xkeysnail for emacs-like key
 一位日本开发者开发了一个能够将 [[https://www.gnu.org/software/emacs/][emacs ]] 的键位习惯应用于整个系统的程序[[https://github.com/mooz/xkeysnail][ xkeysnail]] ，用 ~Python~ 开发。
 例如 ~emacs~ 中控制光标移动的键 ~C+n, C+p, C+f, C+b~ 等等都可以很好地运用 ~emacs-like~ 快捷键于其他程序的文本输入， 修改。
 甚至可以做得更多，通过它的配置文件 ~config.py~  自定义某个程序的快捷键。

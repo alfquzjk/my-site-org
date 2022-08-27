@@ -5,15 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>Extending the root partition's space from the home partition with the fdisk</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /
+<link rel="stylesheet" href="./css/simple.css" />
+<link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <div id="content" class="content">
-<div id="outline-container-org6bc7e28" class="outline-2">
-<h2 id="org6bc7e28">Extending the root partition's space from the home partition with the fdisk</h2>
-<div class="outline-text-2" id="text-org6bc7e28">
+<h1 class="title">Extending the root partition's space from the home partition with the fdisk</h1>
 <p>
 起初在安装 <code>GNU/Linux</code> 的时候由于采用系统默认的磁盘分割，
 导致我的这块只有 <code>120G</code> 的磁盘其 <code>root</code> 对应的分区只有可怜的 <code>20G</code> ， 于是最近在安装一些软件包的时候存放二进制文件的 <code>/usr/bin</code> 目录空间不够，很是苦恼。
@@ -22,11 +21,10 @@
 磁盘的 <code>3/4</code> 之多 ，那就不如从 <code>/home</code> 对应的分区腾出一部分空间来扩展到
 <code>/</code> 对应的分区。
 </p>
-</div>
 
-<div id="outline-container-org9f3b109" class="outline-3">
-<h3 id="org9f3b109">做好 /home 的备份</h3>
-<div class="outline-text-3" id="text-org9f3b109">
+<div id="outline-container-org2064918" class="outline-2">
+<h2 id="org2064918">做好 /home 的备份</h2>
+<div class="outline-text-2" id="text-org2064918">
 <p>
 首先， <code>/home</code> 目录存放了大量的用户配置以及一些文件数据，有些是很重要的，
 如果不想重装系统，一定要做好备份！（系统重装是一件极其耗费时间和精力的事，尽管
@@ -49,17 +47,17 @@
 </div>
 </div>
 
-<div id="outline-container-org4e2f506" class="outline-3">
-<h3 id="org4e2f506">小心驶得万年船</h3>
-<div class="outline-text-3" id="text-org4e2f506">
+<div id="outline-container-org2077f21" class="outline-2">
+<h2 id="org2077f21">小心驶得万年船</h2>
+<div class="outline-text-2" id="text-org2077f21">
 <p>
 重启系统，以 <code>/root</code> 权限，并以 <code>tty0/1</code> 登陆，因为如果继续在当前用户环境下操作，
 由于某些程序需要读取 <code>/home</code> 中的文件，系统就可能会处于繁忙状态而无法操作。
 </p>
 </div>
-<div id="outline-container-orgbd4e8db" class="outline-4">
-<h4 id="orgbd4e8db">查看当前系统盘信息</h4>
-<div class="outline-text-4" id="text-orgbd4e8db">
+<div id="outline-container-org07dacc5" class="outline-3">
+<h3 id="org07dacc5">查看当前系统盘信息</h3>
+<div class="outline-text-3" id="text-org07dacc5">
 <div class="org-src-container">
 <pre class="src src-shell">fdisk -l
 </pre>
@@ -97,9 +95,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orge88ed57" class="outline-4">
-<h4 id="orge88ed57">进行分区操作</h4>
-<div class="outline-text-4" id="text-orge88ed57">
+<div id="outline-container-org35a170a" class="outline-3">
+<h3 id="org35a170a">进行分区操作</h3>
+<div class="outline-text-3" id="text-org35a170a">
 <p>
 接下来的操作一定要谨慎！
 </p>
@@ -126,7 +124,7 @@
 输入参数就可以完成磁盘的扩容。
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">Command (m for help):
+<pre class="src src-shell"><span style="font-weight: bold;">Command</span> (m for help):
 </pre>
 </div>
 <p>
@@ -146,7 +144,7 @@
 <code>d</code> ，类似输出如下：
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">Command (m for help): d
+<pre class="src src-shell"><span style="font-weight: bold;">Command</span> (m for help): d
 Partition number (1-3, default 3):
 </pre>
 </div>
@@ -155,7 +153,7 @@ Partition number (1-3, default 3):
 比如 <code>/boot</code> 分区从 <code>2048</code> 号扇区位起始到 <code>1048575</code> 号扇区位结束为 <code>number1</code> ，
 从 <code>1050624</code> 号扇区位开始到 <code>84936703</code> 号扇区位结束为 <code>number2</code> ， 以此类推， 可以
 看到每一个分区的顺序是按照当初磁盘分割时的逻辑顺序排列的。
-好了， 由于我的 <code>/home</code> 目录对应 <code>/de/sda3</code> 分区， 所以输入数字 <code>3</code> ，
+好了， 由于我的 <code>/home</code> 目录对应 <code>/dev/sda3</code> 分区， 所以输入数字 <code>3</code> ，
 然后再输入 <code>w</code> 命令进行写入并保存退出（这时候你的 <code>/home</code> 下的所有数据都被清空，
 但是我们已经及时做好了备份）。
 </p>
@@ -188,7 +186,7 @@ Partition number (1-3, default 3):
 输入 <code>n</code> 命令， 创建新的分区(也就是扩容 <code>/</code>)， 类似如下输出：
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">Command (m for help): n
+<pre class="src src-shell"><span style="font-weight: bold;">Command</span> (m for help): n
 Partition number (2-128, default 2): 2
 First sector (34-250069646, default 1048576):
 </pre>
@@ -210,9 +208,9 @@ First sector (34-250069646, default 1048576):
 </div>
 </div>
 
-<div id="outline-container-orge3b2040" class="outline-4">
-<h4 id="orge3b2040">对扩容的分区进行最后一步操作</h4>
-<div class="outline-text-4" id="text-orge3b2040">
+<div id="outline-container-org6e676f1" class="outline-3">
+<h3 id="org6e676f1">对扩容的分区进行最后一步操作</h3>
+<div class="outline-text-3" id="text-org6e676f1">
 <p>
 接下来还要对 <code>/</code> 的分区进行文件系统的写入：
 </p>
@@ -227,9 +225,9 @@ First sector (34-250069646, default 1048576):
 </div>
 </div>
 
-<div id="outline-container-orgc7b26f7" class="outline-4">
-<h4 id="orgc7b26f7">恢复 /home 目录</h4>
-<div class="outline-text-4" id="text-orgc7b26f7">
+<div id="outline-container-orgc162148" class="outline-3">
+<h3 id="orgc162148">恢复 /home 目录</h3>
+<div class="outline-text-3" id="text-orgc162148">
 <p>
 最后一步从备份中恢复 <code>/home</code> 目录中的所有文件， 首先为 <code>/dev/sda3</code> 写入文件系统，
 由于我使用的是 <code>ext4</code> ， 所以输入以下命令：
@@ -253,9 +251,9 @@ First sector (34-250069646, default 1048576):
 </div>
 </div>
 
-<div id="outline-container-org99f075e" class="outline-3">
-<h3 id="org99f075e">重启计算机</h3>
-<div class="outline-text-3" id="text-org99f075e">
+<div id="outline-container-org0e0a338" class="outline-2">
+<h2 id="org0e0a338">重启计算机</h2>
+<div class="outline-text-2" id="text-org0e0a338">
 <p>
 输入用户账号登陆， 进入桌面系统， 一切又是当初的模样！
 </p>
@@ -263,7 +261,6 @@ First sector (34-250069646, default 1048576):
 <p>
 <a href="./index.html">&lt;&#x2013; Back to Home</a>
 </p>
-</div>
 </div>
 </div>
 </div>

@@ -5,25 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>xkeysnail for emacs-like key</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /
+<link rel="stylesheet" href="./css/simple.css" />
+<link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <div id="content" class="content">
-<div id="outline-container-orgdc9fdf0" class="outline-2">
-<h2 id="orgdc9fdf0">xkeysnail for emacs-like key</h2>
-<div class="outline-text-2" id="text-orgdc9fdf0">
+<h1 class="title">xkeysnail for emacs-like key</h1>
 <p>
 一位日本开发者开发了一个能够将 <a href="https://www.gnu.org/software/emacs/">emacs </a> 的键位习惯应用于整个系统的程序<a href="https://github.com/mooz/xkeysnail"> xkeysnail</a> ，用 <code>Python</code> 开发。
 例如 <code>emacs</code> 中控制光标移动的键 <code>C+n, C+p, C+f, C+b</code> 等等都可以很好地运用 <code>emacs-like</code> 快捷键于其他程序的文本输入， 修改。
 甚至可以做得更多，通过它的配置文件 <code>config.py</code>  自定义某个程序的快捷键。
 </p>
-</div>
 
-<div id="outline-container-org982c7f5" class="outline-3">
-<h3 id="org982c7f5">Install xkeysnail</h3>
-<div class="outline-text-3" id="text-org982c7f5">
+<div id="outline-container-orgc62fe94" class="outline-2">
+<h2 id="orgc62fe94">Install xkeysnail</h2>
+<div class="outline-text-2" id="text-orgc62fe94">
 <p>
 使用<a href="https://github.com/actionless/pikaur"> pikaur</a> 进行安装。
 </p>
@@ -33,53 +31,53 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org4f0dfcf" class="outline-3">
-<h3 id="org4f0dfcf">配置xkeysnail自启动</h3>
-<div class="outline-text-3" id="text-org4f0dfcf">
+<div id="outline-container-orgc7737c1" class="outline-2">
+<h2 id="orgc7737c1">配置xkeysnail自启动</h2>
+<div class="outline-text-2" id="text-orgc7737c1">
 <p>
 由于 <code>xkeysnail</code> 需要获取键盘活动必须以 <code>root</code> 权限监听并映射，所以有两种方式来自启动 <code>xkeysnail</code> ，
 第一种方式是编写一个 <code>xkeysnail.service</code> 配置，让<a href="https://systemd.io/"> systemd </a>将 <code>xkeysnail</code> 作为守护进程启动，但不推荐。
 这里我选择第二种方式。
 </p>
 </div>
-<div id="outline-container-org26342da" class="outline-4">
-<h4 id="org26342da">创建一个新的用户组 uinput</h4>
-<div class="outline-text-4" id="text-org26342da">
+<div id="outline-container-org2e4e0de" class="outline-3">
+<h3 id="org2e4e0de">创建一个新的用户组 uinput</h3>
+<div class="outline-text-3" id="text-org2e4e0de">
 <div class="org-src-container">
 <pre class="src src-shell">sudo groupadd -f uinput
-sudo gpasswd -a $USER uinput
+sudo gpasswd -a $<span style="font-weight: bold; font-style: italic;">USER</span> uinput
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org8ca1589" class="outline-4">
-<h4 id="org8ca1589">通过 udev 创建新的访问授予权限</h4>
-<div class="outline-text-4" id="text-org8ca1589">
+<div id="outline-container-org0c908e9" class="outline-3">
+<h3 id="org0c908e9">通过 udev 创建新的访问授予权限</h3>
+<div class="outline-text-3" id="text-org0c908e9">
 <div class="org-src-container">
 <pre class="src src-shell">cat &lt;&lt;EOF | sudo tee /etc/udev/rules.d/70-xkeysnail.rules
-KERNEL=="uinput", GROUP="uinput", MODE="0660", OPTIONS+="static_node=uinput"
-KERNEL=="event[0-9]*", GROUP="uinput", MODE="0660"
-EOF
+<span style="font-weight: bold;">KERNEL=="uinput", GROUP="uinput", MODE="0660", OPTIONS+="static_node=uinput"</span>
+<span style="font-weight: bold;">KERNEL=="event[0-9]*", GROUP="uinput", MODE="0660"</span>
+<span style="font-weight: bold;">EOF</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org4bad9df" class="outline-4">
-<h4 id="org4bad9df">编写脚本开机自启动 xkeysnail</h4>
-<div class="outline-text-4" id="text-org4bad9df">
+<div id="outline-container-org33f0570" class="outline-3">
+<h3 id="org33f0570">编写脚本开机自启动 xkeysnail</h3>
+<div class="outline-text-3" id="text-org33f0570">
 <p>
 由于我使用的是<a href="http://dwm.suckless.org/"> dwm </a>窗口管理器，并且使用<a href="http://dwm.suckless.org/patches/autostart/"> autostart </a>这个补丁专门来管理用户空间的自启动程序。
 编写 <code>xkeynsail</code> 的自启动脚本非常简单，只需要在 <code>autostart.sh</code> 脚本中添加一行 <code>shell</code> :
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">xkeysnail --quiet $HOME/.config/xkeysnail/config.py
+<pre class="src src-shell">xkeysnail --quiet $<span style="font-weight: bold; font-style: italic;">HOME</span>/.config/xkeysnail/config.py
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgffef128" class="outline-4">
-<h4 id="orgffef128">关于config.py的配置文件</h4>
-<div class="outline-text-4" id="text-orgffef128">
+<div id="outline-container-orgb671995" class="outline-3">
+<h3 id="orgb671995">关于config.py的配置文件</h3>
+<div class="outline-text-3" id="text-orgb671995">
 <p>
 <code>xkeysnail</code> 的启动必须指定一个 <code>config</code> ，用来映射 <code>X</code> 系统的键盘事件，
 <code>xkeysnail</code> 上作者已经有一个完全可用的 <code>emacs-like</code> 配置，
@@ -88,20 +86,19 @@ EOF
  <a href="https://github.com/alacritty/alacritty">alacritty </a>作为我的终端模拟器，这时候为了避免冲突，需要将 <code>alacritty</code> 过滤掉，它的所有键盘活动不需要 <code>xkeysnail</code> 来映射。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">define_keymap(lambda wm_class: wm_class not in ("Emacs", "URxvt", \
-    "Alacritty"),{...})
+<pre class="src src-python">define_keymap(<span style="font-weight: bold;">lambda</span> wm_class: wm_class <span style="font-weight: bold;">not</span> <span style="font-weight: bold;">in</span> (<span style="font-style: italic;">"Emacs"</span>, <span style="font-style: italic;">"URxvt"</span>, \
+    <span style="font-style: italic;">"Alacritty"</span>),{...})
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org709e37c" class="outline-3">
-<h3 id="org709e37c">重启计算机</h3>
-<div class="outline-text-3" id="text-org709e37c">
+<div id="outline-container-org838061e" class="outline-2">
+<h2 id="org838061e">重启计算机</h2>
+<div class="outline-text-2" id="text-org838061e">
 <p>
 <a href="./index.html">&lt;&#x2013; Back to Home</a>
 </p>
-</div>
 </div>
 </div>
 </div>

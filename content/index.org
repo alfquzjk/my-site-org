@@ -1,6 +1,5 @@
 #+TITLE: LoveIsTouch's website
-*** life is short, but today is a good day!
-
+*** Life is short, but today is a good day!
 ** Poems of the bard
 - [[./Tears.org][Tears]]
 - [[./LongHu.org][Longhu]]

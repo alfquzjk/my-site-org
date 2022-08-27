@@ -1,5 +1,5 @@
 #+OPTIONS: \n:t
-* Sailing
+#+TITLE: Sailing
 我正揚帆啓航
 爲了能再次回到我的故鄉
 穿過這一望無際的海洋

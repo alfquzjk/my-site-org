@@ -1,5 +1,5 @@
 #+OPTIONS: \n:t
-* Snow
+#+TITLE: Snow
 昨夜，我夢見了
 我夢見雪飄落在故鄉的原野上
 冰錐懸掛於屋簷

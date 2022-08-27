@@ -1,5 +1,5 @@
 #+OPTIONS: \n:t
-* Today
+#+TITLE: Today
 今天
 我不想工作
 也不想生活
