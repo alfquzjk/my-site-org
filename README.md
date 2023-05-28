@@ -1,2 +1,2 @@
 # my-site-org
-This is my personal website buiding with emacs org-mod
+This is my personal website building with emacs org-mod
